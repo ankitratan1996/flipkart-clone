@@ -2,11 +2,12 @@ package com.userservice.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.userservice.model.UserInfo;
+import com.userservice.model.entity.UserInfo;
 import com.userservice.model.request.UserRequest;
 
 import com.userservice.service.UserServiceInterface;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.Valid;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.bind.annotation.*;
 
 
@@ -30,7 +31,7 @@ public class UserController {
     @Autowired
     ObjectMapper objectMapper;
     @PostMapping(value = "/created",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createUserInformation(@RequestBody @NotBlank(message="Input can't be blank") @Validated UserRequest userRequest) throws JsonProcessingException {
+    public ResponseEntity<String> createUserInformation(@RequestBody @Valid UserRequest userRequest) throws JsonProcessingException {
        UserInfo userInfo =userService.createANewUser(userRequest);
         return new ResponseEntity<>(objectMapper.writeValueAsString(userInfo), HttpStatus.CREATED);
     }
@@ -56,12 +57,6 @@ public class UserController {
         userService.deleteById(userId);
         return ResponseEntity.ok(true);
     }
-//
-//    @GetMapping("/username/{username}")
-//    public ResponseEntity<UserDto> findByUsername(@PathVariable String username) {
-//        log.info("UserController :: findByUsername");
-//        return ResponseEntity.ok(userService.findByUsername(username));
-//    }
 
 
 }

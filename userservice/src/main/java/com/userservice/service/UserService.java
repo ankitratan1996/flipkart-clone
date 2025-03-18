@@ -2,10 +2,11 @@ package com.userservice.service;
 
 import com.userservice.exception.DuplicateUserException;
 import com.userservice.exception.UserDoesNotExistException;
-import com.userservice.model.UserInfo;
+import com.userservice.model.entity.Credential;
+import com.userservice.model.entity.UserInfo;
 import com.userservice.model.request.UserRequest;
-import com.userservice.repository.UserServiceRepository;
-import org.springframework.beans.BeanUtils;
+import com.userservice.repository.AddressRepository;
+import com.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +17,10 @@ import java.util.Optional;
 public class UserService implements UserServiceInterface{
 
     @Autowired
-    UserServiceRepository userServiceRepository;
+    UserRepository userServiceRepository;
+
+    @Autowired
+    AddressRepository addressRepository;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -41,6 +45,7 @@ public class UserService implements UserServiceInterface{
     {
         UserInfo optionalUserInfo=userServiceRepository.findById(userId).orElseThrow(()-> new UserDoesNotExistException(userId));
 
+
         if(optionalUserInfo.getPhone()!=null)
         optionalUserInfo.setPhone(userRequest.getPhone());
 
@@ -49,6 +54,27 @@ public class UserService implements UserServiceInterface{
 
         if(optionalUserInfo.getLastName()!=null)
         optionalUserInfo.setLastName(userRequest.getLastName());
+
+        if (userRequest.getCredentialRequest() != null) {
+            Credential credential = optionalUserInfo.getCredential();
+            if (credential == null) {
+                credential = new Credential(); // If credential does not exist, create a new one
+                optionalUserInfo.setCredential(credential);
+            }
+
+            if (userRequest.getCredentialRequest().getUsername() != null) {
+                credential.setUsername(userRequest.getCredentialRequest().getUsername());
+            }
+            if (userRequest.getCredentialRequest().getPassword() != null) {
+                credential.setPassword(userRequest.getCredentialRequest().getPassword());  // Consider hashing
+            }
+            if (userRequest.getCredentialRequest().getRoleBasedAuthrority() != null) {
+                credential.setRoleBasedAuthrority(userRequest.getCredentialRequest().getRoleBasedAuthrority());
+            }
+            if (userRequest.getCredentialRequest().getIsEnabled() != null) {
+                credential.setIsEnabled(userRequest.getCredentialRequest().getIsEnabled());
+            }
+        }
 
         return  saveorupdated(optionalUserInfo);
     }

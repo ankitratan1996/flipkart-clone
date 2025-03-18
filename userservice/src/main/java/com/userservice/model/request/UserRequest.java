@@ -1,10 +1,12 @@
 package com.userservice.model.request;
 
-import com.userservice.model.UserInfo;
-import jakarta.persistence.Column;
+import com.userservice.model.entity.Address;
+import com.userservice.model.entity.UserInfo;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,17 +18,23 @@ public class UserRequest {
     private String firstName;
     @NotBlank
     private String lastName;
+    @NotBlank
     @Email
     private String email;
+    @NotBlank
     private String phone;
 
+    private Set<AddressRequest> addressSet;
+
+    private CredentialRequest credentialRequest;
 
     public UserInfo toUserInfo(UserRequest userRequest) {
         return UserInfo.builder().
                 firstName(userRequest.getFirstName()).
                 lastName(userRequest.getLastName()).
-                email(userRequest.email).
-                phone(userRequest.phone).
+                email(userRequest.getEmail()).
+                phone(userRequest.getPhone()).
+                credential(userRequest.getCredentialRequest()!=null?userRequest.getCredentialRequest().toCredential():null).
                 build();
     }
 }
