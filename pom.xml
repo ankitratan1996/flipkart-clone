@@ -15,6 +15,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>userservice</module>
+        <module>productservice</module>
     </modules>
 
     <properties>
