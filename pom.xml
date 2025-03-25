@@ -16,6 +16,9 @@
     <modules>
         <module>userservice</module>
         <module>productservice</module>
+        <module>orderservice</module>
+        <module>paymentservice</module>
+        <module>favourtieservice</module>
     </modules>
 
     <properties>
