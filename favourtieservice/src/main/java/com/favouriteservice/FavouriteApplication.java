@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class favouriteApplication {
+public class FavouriteApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(favouriteApplication.class,args);
+        SpringApplication.run(FavouriteApplication.class,args);
     }
 }
