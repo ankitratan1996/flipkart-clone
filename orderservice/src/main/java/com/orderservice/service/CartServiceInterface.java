@@ -8,5 +8,5 @@ public interface CartServiceInterface {
 
     CartRequest saveToCart(CartRequest cartRequest);
 
-//    CartRequest findOrderById(Integer cartId);
+    CartRequest findOrderById(Integer cartId);
 }

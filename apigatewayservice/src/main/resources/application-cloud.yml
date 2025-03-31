@@ -1,0 +1,74 @@
+spring:
+  application:
+    name: apigateway-service
+  cloud:
+    gateway:
+      #      discovery:
+      #        locator:
+      #          enabled: true
+      #          lower-case-service-id: true
+      routes:
+        - id: USER-MS
+          predicates:
+            - Path=/flipkart/user-service/**
+          uri: lb://USER-SERVICE
+          filters:
+            - RewritePath=/flipkart/user-service/(?<segment>.*), /$\{segment}
+        - id: PRODUCT-MS
+          predicates:
+            - Path=/flipkart/product-service/**
+          uri: lb://PRODUCT-SERVICE
+          filters:
+            - RewritePath=/flipkart/product-service/(?<segment>.*), /$\{segment}
+        - id: ORDER-MS
+          predicates:
+            - Path=/flipkart/order-service/**
+          uri: lb://ORDER-SERVICE
+          filters:
+            - RewritePath=/flipkart/order-service/(?<segment>.*), /$\{segment}
+        - id: PAYEMNT-MS
+          predicates:
+            - Path=/flipkart/payment-service/**
+          uri: lb://PAYMENT-SERVICE
+          filters:
+            - RewritePath=/flipkart/payment-service/(?<segment>.*), /$\{segment}
+        - id: SHIIPING-MS
+          predicates:
+            - Path=/flipkart/shipping-service/**
+          uri: lb://SHIPPING-SERVICE
+          filters:
+            - RewritePath=/flipkart/shipping-service/(?<segment>.*), /$\{segment}
+        - id: FAVOURITE-MS
+          predicates:
+            - Path=/flipkart/favourite-service/**
+          uri: lb://FAVOURITE-SERVICE
+          filters:
+            - RewritePath=/flipkart/favourite-service/(?<segment>.*), /$\{segment}
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      discovery:
+        enabled: true
+      exposure:
+        include: '*'
+  zipkin:
+    tracing:
+      endpoint: http://${ZIPKIN_SERVER}:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_SERVER}:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'

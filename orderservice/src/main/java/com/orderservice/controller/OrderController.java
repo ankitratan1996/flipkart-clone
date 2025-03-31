@@ -19,7 +19,6 @@ public class OrderController {
         return ResponseEntity.ok(orderServiceInterface.save(orderDto));
     }
 
-
     @GetMapping("/{orderId}")
     public ResponseEntity<OrderRequest> findById(@PathVariable("orderId") Integer orderId) {
         log.info("*** OrderDto, resource; fetch order by id *");

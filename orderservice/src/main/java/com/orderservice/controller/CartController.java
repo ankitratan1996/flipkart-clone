@@ -21,9 +21,9 @@ public class CartController {
         return ResponseEntity.ok(cartServiceInterface.saveToCart(cartRequest));
     }
 
-//    @GetMapping("{cartId}")
-//    public ResponseEntity<CartRequest> findById(@PathVariable Integer cartId){
-//        log.info("CartController :: findById");
-//        return ResponseEntity.ok(cartServiceInterface.findOrderById(cartId));
-//    }
+    @GetMapping("{cartId}")
+    public ResponseEntity<CartRequest> findById(@PathVariable Integer cartId){
+        log.info("CartController :: findById");
+        return ResponseEntity.ok(cartServiceInterface.findOrderById(cartId));
+    }
 }

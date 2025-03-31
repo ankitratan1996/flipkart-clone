@@ -25,7 +25,4 @@ public interface CartMappingHelper {
         BeanUtils.copyProperties(cartRequest,carts);
         return carts;
     }
-
-
-
 }
