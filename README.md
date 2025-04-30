@@ -1,37 +1,70 @@
-# 🛡️ Flipkart Microservices Project - JWT Authentication
+# 🛒 Flipkart Microservices Backend
 
-This project is a microservices-based architecture for an e-commerce backend system. It includes services such as `userservice`, `orderservice`, `productservice`, `paymentservice`, and more. Authentication and authorization are implemented using **JWT (JSON Web Token)**.
+This is a microservices-based backend system inspired by the architecture of Flipkart, developed in Java using Spring Boot. It follows modular design principles and enables scalable development of e-commerce platforms.
 
-## 🔐 JWT Authentication Overview
+## 🧱 Project Structure
 
-JWT is used to authenticate users and authorize access to protected resources across microservices.
+flipkart/ ├── apigatewayservice ├── userservice ├── orderservice ├── productservice ├── paymentservice ├── shippingservice ├── favouriteservice ├── auditservice ├── eurekaserver-service ├── proxy-client ├── deployment └── pom.xml
 
-### ✅ Flow
 
-1. **User logs in via `/userservice/login`.**
-2. **A JWT token is generated and returned to the client.**
-3. **Client includes the token in the `Authorization` header for subsequent requests.**
-4. **The `apigatewayservice` validates the token and forwards the request to the appropriate service.**
+## 🚀 Tech Stack
+| Layer         | Technology            |
+|---------------|------------------------|
+| Language      | Java 17+               |
+| Framework     | Spring Boot, Spring Cloud |
+| Build Tool    | Maven                  |
+| Service Discovery | Eureka              |
+| API Gateway   | Spring Cloud Gateway   |
+| Communication | REST, Feign Client     |
+| Containerization | Docker, Kubernetes *(planned)* |
+
+## 🧩 Microservices Overview
+| Service         | Description |
+|-----------------|-------------|
+| **apigatewayservice** | Centralized gateway for routing requests to microservices |
+| **userservice**       | Handles user registration and authentication |
+| **orderservice**      | Manages order placement and retrieval |
+| **productservice**    | Provides product information and listings |
+| **paymentservice**    | Processes transactions and payment data |
+| **shippingservice**   | Handles delivery tracking and logistics |
+| **favouriteservice**  | Lets users add/view favorite products |
+| **auditservice**      | Logs system events for traceability |
+| **eurekaserver-service** | Enables service discovery |
+| **proxy-client**      | Internal service-to-service communication |
+
+## 🛠️ Getting Started
+### 🔄 Prerequisites
+- Java 17+
+- Maven
+- Docker (optional, for deployment)
+### 🔧 Build Project
+```bash
+mvn clean install
+
 
 ---
 
-## 📦 Involved Services
+## 🚀 Technologies Used
 
-- **userservice** – Handles user login and token generation.
-- **apigatewayservice** – Validates JWT tokens on incoming requests.
-- **Other services** – Assume incoming requests are authenticated via the gateway.
+- Java 17+
+- Spring Boot
+- Spring Cloud Gateway
+- Eureka Service Discovery
+- Maven
+- RESTful APIs
+- (Docker/Kubernetes – if applicable)
 
 ---
 
-## 🧪 Example Usage
+## 🛠️ Getting Started
 
-### 1. Login (Token Generation)
+### Prerequisites
 
-```http
-POST /userservice/login
-Content-Type: application/json
+- Java 17 or higher
+- Maven
+- Docker (if using containerized deployment)
 
-{
-  "username": "testuser",
-  "password": "password123"
-}
+### Build All Services
+
+```bash
+mvn clean install
